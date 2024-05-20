@@ -1,51 +1,50 @@
-// Функция для решения квадратных уравнений
+"use strict";
+
 function solveEquation(a, b, c) {
-  'use strict'; // Активация строгого режима
+  // Вычисляем дискриминант
+  const discriminant = b * b - 4 * a * c;
 
-  // Вычисление дискриминанта
-  const d = b * b - 4 * a * c;
-
-  if (d < 0) {
+  if (discriminant < 0) {
     return []; // Нет корней
-  } else if (d === 0) {
+  } else if (discriminant === 0) {
     return [-b / (2 * a)]; // Один корень
   } else {
-    const x1 = (-b + Math.sqrt(d)) / (2 * a);
-    const x2 = (-b - Math.sqrt(d)) / (2 * a);
-    return [x1, x2]; // Два корня
+    const sqrtDiscriminant = Math.sqrt(discriminant);
+    return [
+      -b / (2 * a) + sqrtDiscriminant / (2 * a),
+      -b / (2 * a) - sqrtDiscriminant / (2 * a)
+    ]; // Два корня
   }
 }
 
-// Функция для расчета выплат по ипотеке
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  // Преобразование процентной ставки в месячную
+  // Переводим процентную ставку в месячную
   const monthlyRate = percent / 1200;
 
-  // Расчет тела кредита
-  const body = amount - contribution;
+  // Рассчитываем тело кредита
+  const loanAmount = amount - contribution;
 
-  // Расчет ежемесячного платежа
-  const payment = body * (1 + monthlyRate) / ((1 - monthlyRate) / (1 + monthlyRate));
+  // Рассчитываем ежемесячный платеж
+  const payment = loanAmount * (monthlyRate + monthlyRate / (Math.pow(1 + monthlyRate, countMonths) - 1));
 
-  // Расчет общей суммы выплат
-  let total = payment * countMonths;
+  // Рассчитываем общую сумму выплаты
+  const totalPayment = payment * countMonths;
 
-  // Округление результата
-  total = Math.round(total * 100) / 100;
+  // Округляем результат
+  const roundedTotalPayment = Math.round(totalPayment * 100) / 100;
 
-  return total;
+  return roundedTotalPayment;
 }
 
 // Примеры использования функций
-console.log('Пример 1:', calculateTotalMortgage(10, 0, 50000, 12)); // 52749.53
-console.log('Пример 2:', calculateTotalMortgage(10, 1000, 50000, 12)); // 51694.54
-console.log('Пример 3:', calculateTotalMortgage(10, 0, 20000, 24)); // 22149.56
-console.log('Пример 4:', calculateTotalMortgage(10, 1000, 20000, 24)); // 21042.09
-console.log('Пример 5:', calculateTotalMortgage(10, 20000, 20000, 24)); // 0
-console.log('Пример 6:', calculateTotalMortgage(10, 0, 10000, 36)); // 11616.19
-console.log('Пример 7:', calculateTotalMortgage(15, 0, 10000, 36)); // 12479.52
+console.log(solveEquation(1, -3, 2)); // []
+console.log(solveEquation(1, -8, 16)); // [-4]
+console.log(solveEquation(1, -6, 9)); // [-3, 3]
 
-// Пример решения квадратного уравнения
-const coefficients = [1, -3, 2];
-const roots = solveEquation(...coefficients);
-console.log('Корни уравнения:', roots); // Корни уравнения: [-2, 1]
+console.log(calculateTotalMortgage(10, 0, 50000, 12)); // 52749.53
+console.log(calculateTotalMortgage(10, 1000, 50000, 12)); // 51694.54
+console.log(calculateTotalMortgage(10, 0, 20000, 24)); // 22149.56
+console.log(calculateTotalMortgage(10, 1000, 20000, 24)); // 21042.09
+console.log(calculateTotalMortgage(10, 20000, 20000, 24)); // 0
+console.log(calculateTotalMortgage(10, 0, 10000, 36)); // 11616.19
+console.log(calculateTotalMortgage(15, 0, 10000, 36)); // 12479.52
