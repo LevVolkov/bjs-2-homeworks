@@ -36,7 +36,7 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
   return roundedTotalPayment;
 }
 
-// Примеры использования функций
+//  Примеры использования функций
 console.log(solveEquation(1, -3, 2)); // []
 console.log(solveEquation(1, -8, 16)); // [-4]
 console.log(solveEquation(1, -6, 9)); // [-3, 3]
